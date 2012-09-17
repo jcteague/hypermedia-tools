@@ -27,7 +27,7 @@ namespace HypermediaTools.CollectionBuilders
             var model = new CollectionModel();
             foreach (var resource in resources)
             {
-                model.AddCollectionItem(collection_item_builder.GetCollectionItems(resource));
+                model.AddCollectionItem(collection_item_builder.GetCollectionItems(resource,false));
             }
             model.template = template_builder.BuildTemplate();
             var resourceName = typeof (Resource).GetResourceName();

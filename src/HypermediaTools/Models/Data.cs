@@ -3,7 +3,7 @@ namespace HypermediaTools.Models {
         
         public string name { get; set; }
 
-        public string value { get; set; }
+        public dynamic value { get; set; }
 
         public string prompt { get; set; }
 

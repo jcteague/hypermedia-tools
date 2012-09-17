@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,8 +12,8 @@ namespace HypermediaTools.CollectionBuilders
 {
     public interface IFormatAsDataItem<T>
     {
-        IEnumerable<Data> AsDataItem(object entity);
-        IEnumerable<Data> FormatType(Type object_type);
+        IEnumerable<dynamic> AsDataItem(object entity, bool allowEmbedded=true);
+        IEnumerable<dynamic> FormatType(Type object_type, bool allowEmbedded = true);
     }
 
     public class DefaultDataItemFormatter<T> : IFormatAsDataItem<T>
@@ -24,35 +25,66 @@ namespace HypermediaTools.CollectionBuilders
             this.serializer = serializer;
         }
 
-        public IEnumerable<Data> AsDataItem(object entity)
+        public IEnumerable<dynamic> AsDataItem(object entity, bool allowEmbedded = true)
         {
             var entity_type = entity.GetType();
             var entity_properties = entity_type.GetProperties();
-            var result = new List<Data>();
+            var result = new List<dynamic>();
           
             foreach (var property in entity_properties)
             {
-                if(should_format_as_data_item(property))
+                if(should_format_as_data_item(property, allowEmbedded))
                 {
-                    
-                    var data_item = CreateTemplate(property);
-                    data_item.value = serializer.Serialize(property.GetValue(entity, null));
-                    result.Add(data_item);    
-                    
+                    var property_obj = property.GetValue(entity, null);
+                    if(ShouldBeEmbedded(property, allowEmbedded))
+                    {
+                        
+                        var embedded_data_items = embed_data_item(property, property_obj);
+                        result.Add(embedded_data_items);
+                    }
+                    else
+                    {
+                        var data_item = CreateTemplate(property);
+                        data_item.value = serializer.Serialize(property.GetValue(entity, null));
+                        result.Add(data_item);        
+                    }
                     
                 }
             }
             return result;
         }
 
-        public IEnumerable<Data> FormatType(Type object_type)
+        Data embed_data_item(PropertyInfo property, object embedded_obj)
+        {
+
+
+            var data_result = CreateTemplate(property);
+            if(embedded_obj is IEnumerable)
+            {
+                
+
+                var list_result = new List<dynamic>();
+                foreach (var o in (IEnumerable) embedded_obj)
+                {
+                    var data_item = AsDataItem(o, false);
+                    list_result.Add(new{item = data_item});
+                }
+                data_result.value = list_result.ToArray();
+                return data_result;
+
+            }
+            data_result.value = AsDataItem(embedded_obj, false).ToArray();
+            return data_result;
+        }
+
+        public IEnumerable<dynamic> FormatType(Type object_type, bool allowEmbedded = true)
         {
             var entity_properties = object_type.GetProperties();
-            var result = new List<Data>();
+            var result = new List<dynamic>();
           
             foreach (var property in entity_properties)
             {
-                if(should_format_as_data_item(property))
+                if(should_format_as_data_item(property, allowEmbedded))
                 {
                     
                     var data_item = CreateTemplate(property);
@@ -64,21 +96,22 @@ namespace HypermediaTools.CollectionBuilders
             return result;
         }
 
-        bool should_format_as_data_item(PropertyInfo property)
+        bool should_format_as_data_item(PropertyInfo property, bool allowEmbedded)
         {
             var t = property.PropertyType;
             var is_representable = t.BaseType == typeof (IAmAResource) || t.IsGenericEnumerable();
-
-            if (is_representable) return false;
+            var should_be_embedded = ShouldBeEmbedded(property, allowEmbedded);
+            if (is_representable && !should_be_embedded) return false;
 
             return true;
 
 
         }
 
-        static bool ShouldBeEmbedded(PropertyInfo property)
+        static bool ShouldBeEmbedded(PropertyInfo property, bool allowEmbedded)
         {
-            return property.GetCustomAttributes(typeof (EmbeddedResourceAttribute), true).Count() > 0;
+           var marked_as_embedded = property.GetCustomAttributes(typeof (EmbeddedResourceAttribute), true).Count() > 0;
+            return allowEmbedded && marked_as_embedded;
         }
 
         Data CreateTemplate(PropertyInfo property)

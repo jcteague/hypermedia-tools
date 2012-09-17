@@ -34,17 +34,39 @@
     </script>
     <script type="text/x-handlebars-template" id="resource-template">
       <form class="form-horizontal">
-        {{#each Data}}
+        
+      </form>
+      
+        
+    </script>
+    <script type="text/x-handlebars-template" id="resource-item-template">
         <div class="control-group">
           <label class="control-label" for="inputPassword">{{prompt}}</label>
           <div class="controls">
             <span>{{value}}</span>
           </div>
         </div>
-        
+    </script>
+    <script type="text/x-handlebars-template" id="resource-array-item-template">
+        <div class="control-group">
+          <label class="control-label" for="inputPassword">{{prompt}}</label>
+          {{#each value}}
+            {{#each item}}
+            <div class="controls">
+                <span>{{value}}</span>
+            </div>
+            {{/each}}
+          {{/each}}
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="resource-link-template">
+      <ul class="resource-links">
+        {{#each Links}}
+        <li>
+          <a href="{{href}}" rel="{{rel}}" class="{{name}}">{{prompt}}</a>
+        </li>
         {{/each}}
-      </form>
-        
+      </ul>
     </script>
 
 </html>

@@ -5,7 +5,7 @@ namespace HypermediaTools.CollectionBuilders
 {
     public interface IBuildCollectionItems<Resource> where Resource: IAmAResource
     {
-        CollectionItem GetCollectionItems(Resource representation);
+        CollectionItem GetCollectionItems(Resource representation, bool allowEmbedded = true);
     }
     public class CollectionItemBuilder<Resource> : IBuildCollectionItems<Resource> where Resource : IAmAResource 
     {
@@ -18,13 +18,13 @@ namespace HypermediaTools.CollectionBuilders
             link_builder = linkBuilder;
             template_builder = templateBuilder;
         }
-        public CollectionItem GetCollectionItems(Resource resource)
+        public CollectionItem GetCollectionItems(Resource resource, bool allowEmbedded = true)
         {
 
             return new CollectionItem()
                        {
                            Href = resource.GetResourceHref(),
-                           Data = data_item_formatter.AsDataItem(resource),
+                           Data = data_item_formatter.AsDataItem(resource,allowEmbedded),
                            Links = link_builder.GetLinks(resource)
                        };
         }

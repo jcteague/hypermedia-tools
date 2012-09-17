@@ -1,7 +1,10 @@
 ﻿var root_url = "/api"
+    , templates = {}
     , collection_templates = {}
     , link_template
     , resource_template
+    , resource_item_template
+    , resource_link_template
     , form_field_template;
 
 var get = function (url, callback) {
@@ -10,10 +13,14 @@ var get = function (url, callback) {
     $.getJSON(complete_url, callback);
 //    $.ajax({ async: true, type: "GET", dataType: 'json', url: complete_url, success: callback });
 };
-var compile_templates = function() {
-    link_template = Handlebars.compile($('#link-template').html());
-    form_field_template = Handlebars.compile($('#form-field-template').html());
-    resource_template = Handlebars.compile($('#resource-template').html());
+var compile_templates = function () {
+
+    templates["link_template"] = link_template = Handlebars.compile($('#link-template').html());
+    templates["form_field_template"] = form_field_template = Handlebars.compile($('#form-field-template').html());
+    templates["resource_template"] = resource_template = Handlebars.compile($('#resource-template').html());
+    templates["resource-item-template"] = resource_item_template = Handlebars.compile($('#resource-item-template').html());
+    templates["resource-link-template"] = resource_link_template = Handlebars.compile($('#resource-link-template').html());
+    templates["resource-array-item-template"] = Handlebars.compile($('#resource-array-item-template').html());
 };
 var load_root = function (data) {
     var ul = $('<ul id="root" class="link-list">');
@@ -34,11 +41,27 @@ var render_content = function(data) {
         render_resource(data.resource);
     }
 };
-var render_resource = function (resource) {
+var render_resource = function(resource) {
     $('#collection-table').hide();
-    var resource_view = resource_template(resource);
-    $('#content').append(resource_view);
-}
+    var resource_view = $(resource_template(resource));
+    resource.Data.forEach(function(d) {
+        if (_.isArray(d.value)) {
+            var array_item_view = templates["resource-array-item-template"](d);
+            resource_view.append(array_item_view);
+        }
+
+        else {
+            var resource_item_view = resource_item_template(d);
+            resource_view.append(resource_item_view);
+        }
+    });
+    var resource_links = resource_link_template(resource);
+    $('#content')
+        .append(resource_view)
+        .append(resource_links);
+
+
+};
 var render_collection = function(collection) {
     $('#content').empty();
     var container = $('#content');
@@ -93,7 +116,19 @@ var render_collection_items = function (collection, container) {
             rows += details_cell;
             var values = _.pluck(data[i].Data, "value");
             for (var j = 0; j < values.length; j++) {
-                rows += "<td>" + values[j] + "</td>";
+                var v = values[j];
+                if (_.isArray(v)) {
+                    var list = "<ul>";
+                    v.forEach(function (ev) {
+                        list += "<li>" + ev + "</li>";
+                    })
+                    list += "</ul>";
+                    rows += "<td>"+ list + "</td>";
+                }
+                else {
+                    rows += "<td>" + v + "</td>";    
+                }
+                
             }
             var link_cell = "<td>";
             for (var l = 0; l < item_links.length; l++) {
@@ -143,6 +178,7 @@ var render_template = function (collection) {
         var form_field = form_field_template(f);
         form.push(form_field);
     });
+    
     form.push("<button type='submit'>Submit</>");
     form.push("</form>");
     

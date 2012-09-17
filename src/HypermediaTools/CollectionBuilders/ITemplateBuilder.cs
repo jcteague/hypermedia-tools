@@ -1,3 +1,4 @@
+using System.Linq;
 using HypermediaTools.Models;
 
 namespace HypermediaTools.CollectionBuilders
@@ -21,7 +22,7 @@ namespace HypermediaTools.CollectionBuilders
 
             return new Template
                        {
-                           data = data_item_formatter.FormatType(typeof (TResource))
+                           data = data_item_formatter.FormatType(typeof (TResource)).ToList()
                        };
         }
     }

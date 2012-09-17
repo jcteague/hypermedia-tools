@@ -37,7 +37,7 @@ namespace Contax.Api.Controllers
             this.contactRepository = contactRepository;
             resource_builder = resourceBuilder;
         }
-
+        
         public dynamic Get(int id)
         {
             var contact = contactRepository.GetContact(id);

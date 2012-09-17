@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using HypermediaTools.Attributes;
 using HypermediaTools.Models;
 using FubuCore;
 
@@ -9,20 +10,20 @@ namespace HypermediaTools.CollectionBuilders
 {
     public interface IBuildLinks<T> where T: IAmAResource
     {
-        IEnumerable<Link> GetLinks(T resource);
+        IEnumerable<Link> GetLinks(T resource, bool include_embedded_resource_links = false);
     }
 
     public class LinkBuilder<T>: IBuildLinks<T> where T : IAmAResource
     {
-        public IEnumerable<Link> GetLinks(T resource)
+        public IEnumerable<Link> GetLinks(T resource, bool include_embedded_resource_links = false)
         {
 
             var links = new List<Link>();
-            foreach(var resource_property in GetRelatedResourceProperties(resource))
+            foreach (var resource_property in GetRelatedResourceProperties(resource, include_embedded_resource_links))
             {
                 links.Add(create_resource_link(resource,resource_property));
             }
-            foreach(var collection_property in GetEnumeratedResources(resource))
+            foreach (var collection_property in GetEnumeratedResources(resource, include_embedded_resource_links))
             {
                 links.Add(create_collection_link(resource,collection_property));
             }
@@ -59,20 +60,24 @@ namespace HypermediaTools.CollectionBuilders
                        };
         }
 
-        IEnumerable<PropertyInfo> GetRelatedResourceProperties(T resource)
+        IEnumerable<PropertyInfo> GetRelatedResourceProperties(T resource, bool includeEmbeddedResourceLinks)
         {
             foreach (var prop in typeof (T).GetProperties().Where(p=>p.PropertyType.BaseType == typeof(IAmAResource)))
             {
-                yield return prop;
+                var is_embedded = prop.GetCustomAttributes(typeof (EmbeddedResourceAttribute), true).Count() > 0;
+                if(!is_embedded || includeEmbeddedResourceLinks)
+                    yield return prop;
             }
         }
 
-        IEnumerable<PropertyInfo> GetEnumeratedResources(T resource)
+        IEnumerable<PropertyInfo> GetEnumeratedResources(T resource, bool includeEmbeddedResourceLinks)
         {
             var property_type = typeof (T);
             foreach(var prop in typeof (T).GetProperties().Where(enumerable_of_resource))
             {
-                yield return prop;
+                var is_embedded = prop.GetCustomAttributes(typeof(EmbeddedResourceAttribute), true).Count() > 0;
+                if (!is_embedded || includeEmbeddedResourceLinks)
+                    yield return prop;
             }
                 
         }

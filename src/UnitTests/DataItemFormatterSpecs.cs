@@ -23,7 +23,8 @@ namespace HyperMediaTools.UnitTests
         [RepresentationDataItem(Name="annotated",Prompt="Prompt")]
         public double DoubleProperty { get; set; }
         public DateTime DateProperty { get; set; }
-        public RelatedDataItem LinkedRelatedItem { get; set; }
+        [EmbeddedResource]
+        public IEnumerable<RelatedDataItem> LinkedRelatedItem { get; set; }
 
         public override string GetIdentifer()
         {
@@ -38,6 +39,7 @@ namespace HyperMediaTools.UnitTests
     }
     public class RelatedDataItem : IAmAResource
     {
+        public string RelatedField { get; set; }
         public override string GetIdentifer()
         {
             return "1";
@@ -55,7 +57,9 @@ namespace HyperMediaTools.UnitTests
                                 {
                                     field_serializer = depends.on<IFieldSerializer>();
                                     field_serializer.Stub(x => x.Serialize(1)).Return("value").IgnoreArguments();
-                                    item_to_serialize = Builder<DataItemTester>.CreateNew().Build();
+                                    item_to_serialize = Builder<DataItemTester>.CreateNew()
+                                        .With(x=>x.LinkedRelatedItem = (IEnumerable<RelatedDataItem>) Builder<RelatedDataItem>.CreateListOfSize(3).Build())
+                                        .Build();
                                 };
 
         Because of = () =>
@@ -64,7 +68,7 @@ namespace HyperMediaTools.UnitTests
                              System.Console.WriteLine(result);
                          };
 
-        It should_format_simple_field_types = () => result.Count.ShouldEqual(4);
+        It should_format_simple_field_types_and_embedded_types = () => result.Count.ShouldEqual(4);
         It should_set_the_value_from_the_serializer = () =>
                                                           {
                                                               result.Any(x => x.name == "IntProperty").ShouldBeTrue();
@@ -75,7 +79,7 @@ namespace HyperMediaTools.UnitTests
         
         
         protected static DataItemTester item_to_serialize;
-        protected static IList<Data> result;
+        protected static List<dynamic> result;
         static IFieldSerializer field_serializer;
     }
 
@@ -93,6 +97,9 @@ namespace HyperMediaTools.UnitTests
     }
     public class when_formatting_an_embedded_resource : DataItemFormatterSpecs
     {
-        
+        It should_be_an_array_of_data_items = () =>
+                                                  {
+                                                      result[4].Count.ShouldEqual(1);
+                                                  };
     }
 }
