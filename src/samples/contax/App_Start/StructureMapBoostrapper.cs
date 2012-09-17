@@ -1,5 +1,6 @@
 
 
+using Contax.Services;
 using HypermediaTools.CollectionBuilders;
 using HypermediaTools.Serialization;
 using StructureMap;
@@ -11,6 +12,7 @@ namespace Contax {
 
                 x.Scan(scanner =>
                     {
+
                         scanner.AssemblyContainingType(typeof(IBuildCollection<>));
                         scanner.AssemblyContainingType<StructureMapBoostrapper>();
                         scanner.RegisterConcreteTypesAgainstTheFirstInterface();
@@ -21,7 +23,7 @@ namespace Contax {
                         scanner.ConnectImplementationsToTypesClosing(typeof(ITemplateBuilder<>));
 
                     });
-//                x.For<IFieldSerializer>().Use<J
+                x.For<IContactRepository>().Use<ContactRepository>();
                 x.For(typeof(IBuildCollection<>)).Use(typeof(CollectionBuilder<>));
                 x.For(typeof(IBuildCollectionItems<>)).Use(typeof(CollectionItemBuilder<>));
                 x.For(typeof(IFormatAsDataItem<>)).Use(typeof(DefaultDataItemFormatter<>));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HypermediaTools.CollectionBuilders;
 
 namespace contax.Models
@@ -10,6 +11,7 @@ namespace contax.Models
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
+        public IEnumerable<Tag> Tags { get; set; }
         public override string GetIdentifer()
         {
             return Id.ToString();

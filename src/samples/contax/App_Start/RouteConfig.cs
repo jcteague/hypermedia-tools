@@ -9,10 +9,15 @@ namespace Contax
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                name: "RootRoute",
+                routeTemplate: "api/",
+                defaults: new {controller = "Root", action = "Get"}
+                );
+            routes.MapHttpRoute(
+                 name: "DefaultApi",
+                 routeTemplate: "api/{controller}/{id}",
+                 defaults: new { id = RouteParameter.Optional }
+             );
 
             routes.MapRoute(
                 name: "Default",

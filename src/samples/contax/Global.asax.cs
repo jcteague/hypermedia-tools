@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Contax;
+using StructureMap;
 
 namespace contax {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -14,8 +15,9 @@ namespace contax {
 
     public class WebApiApplication : System.Web.HttpApplication {
         protected void Application_Start() {
+            StructureMapBoostrapper.Start();
             AreaRegistration.RegisterAllAreas();
-
+            GlobalConfiguration.Configuration.DependencyResolver = new StructureMapDependencyResolver(ObjectFactory.Container);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
