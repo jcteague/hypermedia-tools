@@ -12,7 +12,8 @@ namespace contax.Models
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
-//        [EmbeddedResource]
+        public string TwitterAccount { get; set; }
+        [EmbeddedResource]
         public IEnumerable<Tag> Tags { get; set; }
         public override string GetIdentifer()
         {
