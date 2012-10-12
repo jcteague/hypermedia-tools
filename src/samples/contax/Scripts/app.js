@@ -14,7 +14,7 @@ var get = function (url, callback) {
 //    $.ajax({ async: true, type: "GET", dataType: 'json', url: complete_url, success: callback });
 };
 var compile_templates = function () {
-
+    //here are the templates
     templates["link_template"] = link_template = Handlebars.compile($('#link-template').html());
     templates["form_field_template"] = form_field_template = Handlebars.compile($('#form-field-template').html());
     templates["resource_template"] = resource_template = Handlebars.compile($('#resource-template').html());
