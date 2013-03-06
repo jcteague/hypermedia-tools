@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HypermediaTools", "HypermediaTools\HypermediaTools.csproj", "{AA3B2630-1217-40B3-99BC-0404B22C7E33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{E4F03B94-988E-4757-AE14-AD50575D587A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contax", "Samples\Contax\Contax.csproj", "{28F6183A-E6C7-4A03-8D48-C0164498FC47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA3B2630-1217-40B3-99BC-0404B22C7E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA3B2630-1217-40B3-99BC-0404B22C7E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA3B2630-1217-40B3-99BC-0404B22C7E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA3B2630-1217-40B3-99BC-0404B22C7E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4F03B94-988E-4757-AE14-AD50575D587A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4F03B94-988E-4757-AE14-AD50575D587A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4F03B94-988E-4757-AE14-AD50575D587A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4F03B94-988E-4757-AE14-AD50575D587A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F6183A-E6C7-4A03-8D48-C0164498FC47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F6183A-E6C7-4A03-8D48-C0164498FC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F6183A-E6C7-4A03-8D48-C0164498FC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F6183A-E6C7-4A03-8D48-C0164498FC47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

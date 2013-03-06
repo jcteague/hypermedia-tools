@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AvenidaSoftware.Objects</id>
+    <version>1.0.4808.30338</version>
+    <title>Avenida Software Objects</title>
+    <authors>Avenida Software</authors>
+    <owners>Avenida Software</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Objects</description>
+    <references>
+      <reference file="AvenidaSoftware.Objects.dll" />
+    </references>
+  </metadata>
+</package>
