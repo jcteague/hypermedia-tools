@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AvenidaSoftware.Extensions;
 using AvenidaSoftware.HypermediaTools.Extensions;
 
 namespace AvenidaSoftware.HypermediaTools {

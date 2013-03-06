@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AvenidaSoftware.Extensions">
-      <HintPath>packages\AvenidaSoftware.Extensions.1.0.4811.20389\lib\net40\AvenidaSoftware.Extensions.dll</HintPath>
+    <Reference Include="AvenidaSoftware.Extensions, Version=1.0.4813.30093, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AvenidaSoftware.Extensions.1.0.4813.30093\lib\net40\AvenidaSoftware.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="AvenidaSoftware.Objects">
       <HintPath>..\packages\AvenidaSoftware.Objects.1.0.4808.30338\lib\net40\AvenidaSoftware.Objects.dll</HintPath>
