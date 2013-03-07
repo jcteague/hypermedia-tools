@@ -31,45 +31,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseToNugetLocal|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\ReleaseToNugetLocal\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Release\HypermediaTools.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseToNugetOrg|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\ReleaseToNugetOrg\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Release\HypermediaTools.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AvenidaSoftware.Extensions, Version=1.0.4813.30093, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AvenidaSoftware.Extensions, Version=1.0.4814.29233, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AvenidaSoftware.Extensions.1.0.4813.30093\lib\net40\AvenidaSoftware.Extensions.dll</HintPath>
+      <HintPath>..\packages\AvenidaSoftware.Extensions.1.0.4814.29233\lib\net40\AvenidaSoftware.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="AvenidaSoftware.Objects">
-      <HintPath>..\packages\AvenidaSoftware.Objects.1.0.4808.30338\lib\net40\AvenidaSoftware.Objects.dll</HintPath>
+    <Reference Include="AvenidaSoftware.Objects, Version=1.0.4814.29294, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AvenidaSoftware.Objects.1.0.4814.29294\lib\net40\AvenidaSoftware.Objects.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
@@ -143,20 +127,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!--RELEASE TO NUGET lOCAL-->
-  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleaseToNugetLocal'">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
-    </GetAssemblyIdentity>
-    <Exec Command="Nuget.exe pack $(ProjectPath) -OutputDirectory $(ProjectDir)NugetPackage\ -Symbols -Properties Configuration=ReleaseToNugetLocal" />
-    <Exec Command="Nuget.exe push $(ProjectDir)NugetPackage\$(TargetName).%(AssemblyVersion.Version).nupkg AEAA3BC3-B024-492F-829D-15940F91D7D4 -s http://nugetserver.avenida.com/" />
-  </Target>
-  <!--RELEASE TO NUGET ORG-->
-  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleaseToNugetOrg'">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
-    </GetAssemblyIdentity>
-    <Exec Command="..\Tools\Nuget.exe pack $(ProjectPath) -OutputDirectory $(ProjectDir)NugetPackage\ -Symbols -Properties Configuration=ReleaseToNugetOrg" />
-    <Exec Command="..\Tools\Nuget.exe push $(ProjectDir)NugetPackage\$(TargetName).%(AssemblyVersion.Version).nupkg" />
-  </Target>
+  <!-- RELEASE TO NUGET LOCAL||ORG -->
+	<Target Name="AfterBuild" >
+		<CallTarget Condition="'$(Configuration)' == 'ReleaseToNugetLocal'" Targets="release_nuget_local" />
+		<CallTarget Condition="'$(Configuration)' == 'ReleaseToNugetOrg'" Targets="release_nuget_org" />
+	</Target> 
+	
+	<Target Name="release_nuget_local">
+		<GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+			<Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+		</GetAssemblyIdentity>
+		<Exec Command="..\Tools\Nuget.exe pack $(ProjectPath) -OutputDirectory $(ProjectDir)NugetPackage\ -Symbols -Properties Configuration=ReleaseToNugetLocal" />
+		<Exec Command="..\Tools\Nuget.exe push $(ProjectDir)NugetPackage\$(TargetName).%(AssemblyVersion.Version).nupkg -s http://nugetserver.avenida.com/" />
+	</Target>
+	
+	<Target Name="release_nuget_org" >
+		<GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+			<Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+		</GetAssemblyIdentity>
+		<Exec Command="..\Tools\Nuget.exe pack $(ProjectPath) -OutputDirectory $(ProjectDir)NugetPackage\ -Symbols -Properties Configuration=ReleaseToNugetOrg" />
+		<Exec Command="..\Tools\Nuget.exe push $(ProjectDir)NugetPackage\$(TargetName).%(AssemblyVersion.Version).nupkg" />
+	</Target>
 </Project>
