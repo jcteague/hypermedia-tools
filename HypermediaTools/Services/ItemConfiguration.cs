@@ -9,16 +9,16 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 	public class ItemConfiguration<TDataSource> : IItemConfiguration<TDataSource>{
 		public Type TemplateType { get; private set; }
 		public IEnumerable<TDataSource> DataSources { get; private set; }
-		public ICollectionJsonConfiguration CollectionJsonConfiguration { get; private set; }
+		public IJsonCollectionConfiguration JsonCollectionConfiguration { get; private set; }
 		public IDataBuilder DataBuilder { get; private set; }
 		public List<Func<TDataSource, Link>> LinksBuilder { get; private set; }
 		public List<Func<TDataSource, Data>> CustomsDataBuilder { get; private set; }
 		public Func<TDataSource, Link> SelfLinkBuilder { get; private set; }
 
-		public ItemConfiguration(IEnumerable<TDataSource> dataSources, Type templateType, ICollectionJsonConfiguration collectionJsonConfiguration, IDataBuilder dataBuilder) {
+		public ItemConfiguration(IEnumerable<TDataSource> dataSources, Type templateType, IJsonCollectionConfiguration json_collection_configuration, IDataBuilder dataBuilder) {
 			TemplateType = templateType;
 			DataSources = dataSources;
-			CollectionJsonConfiguration = collectionJsonConfiguration;
+			JsonCollectionConfiguration = json_collection_configuration;
 			DataBuilder = dataBuilder;
 			LinksBuilder = new List<Func<TDataSource, Link>>();
 			CustomsDataBuilder = new List<Func<TDataSource, Data>>();
@@ -39,8 +39,8 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 		}
 
 
-		public ICollectionJsonConfiguration AddLink(Link link) {
-			return CollectionJsonConfiguration.AddLink(link);
+		public IJsonCollectionConfiguration AddLink(Link link) {
+			return JsonCollectionConfiguration.AddLink(link);
 		}
 
 		public IItemConfiguration<TDataSource> AddItemLink(Func<TDataSource, Link> link_builder) {
@@ -63,30 +63,30 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 		}
 		
 		public void SetUrl(string url) {
-			CollectionJsonConfiguration.SetUrl(url);
+			JsonCollectionConfiguration.SetUrl(url);
 		}
 
 		public Collection Collection {
-			get { return CollectionJsonConfiguration.Collection; }
+			get { return JsonCollectionConfiguration.Collection; }
 		}
 
 
 		public IItemDataSourceConfiguration AddItemsFor<ItemModel>() {
 			Build();
-			return CollectionJsonConfiguration.AddItemsFor<ItemModel>();
+			return JsonCollectionConfiguration.AddItemsFor<ItemModel>();
 		}
 
 		public ITemplateDataSourceConfiguration AddTemplateFor<TTemplate>() {
 			Build();
-			return CollectionJsonConfiguration.AddTemplateFor<TTemplate>();
+			return JsonCollectionConfiguration.AddTemplateFor<TTemplate>();
 		}
 
 		public IQueryConfiguration AddQueryFor(object filter) {
 			Build();
-			return CollectionJsonConfiguration.AddQueryFor(filter);
+			return JsonCollectionConfiguration.AddQueryFor(filter);
 		}
 
-		public CollectionJson Build() {
+		public JsonCollection Build() {
 			var items = new List<Item>(Collection.items);
 			foreach (var data_source in DataSources) {
 				var item = ItemBuilder(TemplateType, data_source);
@@ -112,7 +112,7 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 
 			Collection.items = items;
 
-			return CollectionJsonConfiguration.Build();
+			return JsonCollectionConfiguration.Build();
 		}
 
 		Item ItemBuilder(Type template_type, object data_source) {

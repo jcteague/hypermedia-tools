@@ -13,12 +13,12 @@ namespace HypermediaTools.UnitTests.Services {
 		public abstract class concern : Observes<IItemDataSourceConfiguration, ItemDataSourceConfiguration>{
 			Establish c = () => {
 				template_type = depends.on(typeof (object));
-				collection_json_configuration = depends.on<ICollectionJsonConfiguration>();
+				json_collection_configuration = depends.on<IJsonCollectionConfiguration>();
 				data_builder = depends.on<IDataBuilder>();
 			};
 
 			protected static Type template_type;
-			protected static ICollectionJsonConfiguration collection_json_configuration;
+			protected static IJsonCollectionConfiguration json_collection_configuration;
 			protected static IDataBuilder data_builder;
 		}
 

@@ -5,12 +5,12 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 
 	public class ItemDataSourceConfiguration : IItemDataSourceConfiguration {
 		public Type TemplateType { get; set; }
-		public ICollectionJsonConfiguration CollectionJsonConfiguration { get; set; }
+		public IJsonCollectionConfiguration JsonCollectionConfiguration { get; set; }
 		public IDataBuilder DataBuilder { get; set; }
 
-		public ItemDataSourceConfiguration( Type template_type, ICollectionJsonConfiguration collection_json_configuration, IDataBuilder data_builder ) {
+		public ItemDataSourceConfiguration( Type template_type, IJsonCollectionConfiguration json_collection_configuration, IDataBuilder data_builder ) {
 			TemplateType = template_type;
-			CollectionJsonConfiguration = collection_json_configuration;
+			JsonCollectionConfiguration = json_collection_configuration;
 			DataBuilder = data_builder;
 		}
 		
@@ -20,7 +20,7 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 		}
 
 		public IItemConfiguration<TDataSource> UseDataSource<TDataSource>( IEnumerable<TDataSource> data_sources ){
-			return new ItemConfiguration<TDataSource>(data_sources, TemplateType,CollectionJsonConfiguration,DataBuilder);
+			return new ItemConfiguration<TDataSource>(data_sources, TemplateType,JsonCollectionConfiguration,DataBuilder);
 		}
 	}
 

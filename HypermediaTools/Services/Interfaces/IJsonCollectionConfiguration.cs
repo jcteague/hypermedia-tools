@@ -1,11 +1,11 @@
 ﻿namespace AvenidaSoftware.HypermediaTools.Services {
 
-	public interface ICollectionJsonConfiguration {
-		CollectionJson Build();
+	public interface IJsonCollectionConfiguration {
+		JsonCollection Build();
 		IItemDataSourceConfiguration AddItemsFor<ItemModel>();
 		ITemplateDataSourceConfiguration AddTemplateFor<TemplateModel>();
 		IQueryConfiguration AddQueryFor(object filter);
-		ICollectionJsonConfiguration AddLink(Link link);
+		IJsonCollectionConfiguration AddLink(Link link);
 		void SetUrl(string url);
 		Collection Collection { get; }
 	}

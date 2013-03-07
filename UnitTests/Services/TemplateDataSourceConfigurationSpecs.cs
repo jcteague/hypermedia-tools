@@ -16,12 +16,12 @@ namespace HypermediaTools.UnitTests.Services {
 		public abstract class concern : Observes<ITemplateDataSourceConfiguration, TemplateDataSourceConfiguration>{
 			Establish c = () => {
 				template_type = depends.on(typeof (object));
-				collection_json_configuration = depends.on<ICollectionJsonConfiguration>();
+				json_collection_configuration = depends.on<IJsonCollectionConfiguration>();
 				DataBuilder = depends.on<IDataBuilder>();
 			};
 
 			protected static Type template_type;
-			protected static ICollectionJsonConfiguration collection_json_configuration;
+			protected static IJsonCollectionConfiguration json_collection_configuration;
 			protected static IDataBuilder DataBuilder;
 		}
 
@@ -45,13 +45,13 @@ namespace HypermediaTools.UnitTests.Services {
 
 			Establish c = () => {
 				var obj_to_return = new Collection { template = new Template { data = new List<Data>( ) } };
-				collection_json_configuration.Stub(x => x.Collection).Return( obj_to_return );
+				json_collection_configuration.Stub(x => x.Collection).Return( obj_to_return );
 				DataBuilder.Stub(x => x.GetDatasFor(Arg<Type>.Is.Equal(typeof (object)), Arg<object>.Is.Anything)).Return(new List<Data>());
 			};
 
 			Because b = () => sut.Build();
 
-			It should_build_it_using_the_json_configuration = () => collection_json_configuration.WasToldTo(x => x.Build());
+			It should_build_it_using_the_json_configuration = () => json_collection_configuration.WasToldTo(x => x.Build());
 		}
 	}
 }

@@ -8,10 +8,10 @@ using developwithpassion.specifications.rhinomocks;
 
 namespace HypermediaTools.UnitTests.Services {
 
-	[Subject(typeof(CollectionJsonConfiguration))]
-	public class CollectionJsonConfigurationSpecs {
+	[Subject(typeof(JsonCollectionConfiguration))]
+	public class JsonCollectionConfigurationSpecs {
 
-		public abstract class concern : Observes<ICollectionJsonConfiguration, CollectionJsonConfiguration>{
+		public abstract class concern : Observes<IJsonCollectionConfiguration, JsonCollectionConfiguration>{
 			Establish c = () => {
 				DataBuilder = depends.on<IDataBuilder>();
 			};
@@ -26,7 +26,7 @@ namespace HypermediaTools.UnitTests.Services {
 
 			Because b = () => sut.SetUrl(url);
 
-			It should_set_the_collection_href = () => sut.As<CollectionJsonConfiguration>().Collection.href.ShouldEqual(url);
+			It should_set_the_collection_href = () => sut.As<JsonCollectionConfiguration>().Collection.href.ShouldEqual(url);
 
 			static string url;		
 		}
@@ -38,10 +38,10 @@ namespace HypermediaTools.UnitTests.Services {
 
 			Because b = () => result = sut.Build();
 
-			It should_return_the_correct_collection = () => result.collection.ShouldBeTheSameAs(sut.As<CollectionJsonConfiguration>().Collection);
+			It should_return_the_correct_collection = () => result.collection.ShouldBeTheSameAs(sut.As<JsonCollectionConfiguration>().Collection);
 
 			static string url;
-			static CollectionJson result;
+			static JsonCollection result;
 		}
 
 		public class when_adding_a_new_item_for_given_template: concern{
@@ -50,7 +50,7 @@ namespace HypermediaTools.UnitTests.Services {
 			It should_return_a_new_item_configuration = () => {
 				var item_configuration = result.As<ItemDataSourceConfiguration>();
 				item_configuration.TemplateType.ShouldEqual(typeof (object));
-				item_configuration.CollectionJsonConfiguration.ShouldBeTheSameAs(sut);
+				item_configuration.JsonCollectionConfiguration.ShouldBeTheSameAs(sut);
 				item_configuration.DataBuilder.ShouldBeTheSameAs(DataBuilder);
 			};
 
@@ -63,7 +63,7 @@ namespace HypermediaTools.UnitTests.Services {
 			It should_return_a_new_item_configuration = () => {
 				var item_configuration = result.As<TemplateDataSourceConfiguration>();
 				item_configuration.TemplateType.ShouldEqual(typeof (object));
-				item_configuration.JsonConfiguration.ShouldBeTheSameAs(sut);
+				item_configuration.Configuration.ShouldBeTheSameAs(sut);
 				item_configuration.DataBuilder.ShouldBeTheSameAs(DataBuilder);
 			};
 
@@ -97,7 +97,7 @@ namespace HypermediaTools.UnitTests.Services {
 			It should_return_a_new_item_configuration = () => {
 				var item_configuration = result.As<QueryConfiguration>();
 				item_configuration.Filter.ShouldEqual(query_model);
-				item_configuration.JsonConfiguration.ShouldBeTheSameAs(sut);
+				item_configuration.Configuration.ShouldBeTheSameAs(sut);
 				item_configuration.DataBuilder.ShouldBeTheSameAs(DataBuilder);
 			};
 

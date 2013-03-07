@@ -3,10 +3,10 @@ using System.Net;
 
 namespace AvenidaSoftware.HypermediaTools {
 
-	public class CollectionJson {
+	public class JsonCollection {
 		public Collection collection { get; set; }
 
-		public static CollectionJson ForErrors( IEnumerable<string> errors, HttpStatusCode code, string title ) {
+		public static JsonCollection ForErrors( IEnumerable<string> errors, HttpStatusCode code, string title ) {
 			var collection = new Collection {
 				error = new CollectionMessage {
 					code = code.ToString(),
@@ -15,10 +15,10 @@ namespace AvenidaSoftware.HypermediaTools {
 				}
 			};
 
-			return new CollectionJson { collection = collection };
+			return new JsonCollection { collection = collection };
 		}
 
-		public CollectionJson( ) {
+		public JsonCollection( ) {
 			collection = new Collection();
 		}
 	}

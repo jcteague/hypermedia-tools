@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AvenidaSoftware.HypermediaTools.Services {
 	
-	public interface ITemplateConfiguration< out TDataSource> : ICollectionJsonConfiguration{
+	public interface ITemplateConfiguration< out TDataSource> : IJsonCollectionConfiguration{
 		TDataSource DataSource { get; }
 
 		ITemplateConfiguration<TDataSource> AddCustomData( Data data );

@@ -5,44 +5,44 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 	
 	public class TemplateConfiguration<TDataSource> : ITemplateConfiguration<TDataSource> {
 		public Type TemplateType { get; private set; }
-		public ICollectionJsonConfiguration JsonConfiguration { get; private set; }
+		public IJsonCollectionConfiguration Configuration { get; private set; }
 		public IDataBuilder DataBuilder { get; private set; }
 		public TDataSource DataSource { get; private set; }
 		public List<Func<TDataSource,Data>> CustomsDataBuilder { get; private set; }
 
-		public TemplateConfiguration(Type template_type, ICollectionJsonConfiguration json_configuration, IDataBuilder data_builder, TDataSource data_source) {
+		public TemplateConfiguration(Type template_type, IJsonCollectionConfiguration configuration, IDataBuilder data_builder, TDataSource data_source) {
 			TemplateType = template_type;
-			JsonConfiguration = json_configuration;
+			Configuration = configuration;
 			DataBuilder = data_builder;
 			DataSource = data_source;
 			CustomsDataBuilder =new List<Func<TDataSource, Data>>();
 		}
 
-		public ICollectionJsonConfiguration AddLink(Link link) {
-			return JsonConfiguration.AddLink(link);
+		public IJsonCollectionConfiguration AddLink(Link link) {
+			return Configuration.AddLink(link);
 		}
 
 		public void SetUrl(string url) {
-			JsonConfiguration.SetUrl(url);
+			Configuration.SetUrl(url);
 		}
 
 		public Collection Collection {
-			get { return JsonConfiguration.Collection; }
+			get { return Configuration.Collection; }
 		}
 
 		public IItemDataSourceConfiguration AddItemsFor<ItemModel>(){
 			Build();
-			return JsonConfiguration.AddItemsFor<ItemModel>();
+			return Configuration.AddItemsFor<ItemModel>();
 		}
 
 		public ITemplateDataSourceConfiguration AddTemplateFor<TTemplate>() {
 			Build();
-			return JsonConfiguration.AddTemplateFor<TTemplate>();
+			return Configuration.AddTemplateFor<TTemplate>();
 		}
 
 		public IQueryConfiguration AddQueryFor(object filter) {
 			Build();
-		   return JsonConfiguration.AddQueryFor(filter);
+		   return Configuration.AddQueryFor(filter);
 		}
 		
 
@@ -73,7 +73,7 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 			return this;
 		}
 
-		public CollectionJson Build() {
+		public JsonCollection Build() {
 			var temp_data = new List<Data>();
 
 			if( Collection.template.data != null ) {
@@ -89,7 +89,7 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 
 			Collection.template  = new Template{data = temp_data};
 
-			return JsonConfiguration.Build();
+			return Configuration.Build();
 		}
 	}
 

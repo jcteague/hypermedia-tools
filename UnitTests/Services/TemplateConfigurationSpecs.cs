@@ -16,12 +16,12 @@ namespace HypermediaTools.UnitTests.Services {
 		public abstract class concern : Observes<ITemplateConfiguration<TestData>, TemplateConfiguration<TestData>> {
 			Establish c = ( ) => {
 				template_type = depends.on( typeof( object ) );
-				collection_json_configuration = depends.on<ICollectionJsonConfiguration>( );
+				json_collection_configuration = depends.on<IJsonCollectionConfiguration>( );
 				DataBuilder = depends.on<IDataBuilder>( );
 			};
 
 			protected static Type template_type;
-			protected static ICollectionJsonConfiguration collection_json_configuration;
+			protected static IJsonCollectionConfiguration json_collection_configuration;
 			protected static IDataBuilder DataBuilder;
 		}
 
@@ -35,12 +35,12 @@ namespace HypermediaTools.UnitTests.Services {
 				other_data = new Data( );
 				collection = new Collection { href = url, items = new List<Item>( ), template = new Template { data = new List<Data> { other_data } } };
 
-				collection_json_configuration.Stub( x => x.Collection ).Return( collection );
+				json_collection_configuration.Stub( x => x.Collection ).Return( collection );
 				datas = new List<Data> { test_data };
 
 				DataBuilder.Stub( x => x.GetDatasFor( template_type, test_data_source ) ).Return( datas );
 
-				collection_json_configuration.Stub( x => x.Build( ) ).Return( collection_json );
+				json_collection_configuration.Stub( x => x.Build( ) ).Return( json_collection );
 				custom_data = new Data( );
 			};
 
@@ -48,8 +48,8 @@ namespace HypermediaTools.UnitTests.Services {
 			protected static Collection collection;
 			protected static string url;
 			protected static IEnumerable<Data> datas;
-			protected static CollectionJson result;
-			protected static CollectionJson collection_json;
+			protected static JsonCollection result;
+			protected static JsonCollection json_collection;
 			protected static Data test_data;
 			protected static Data other_data;
 			protected static Data custom_data;
@@ -68,28 +68,28 @@ namespace HypermediaTools.UnitTests.Services {
 				item.data.ElementAt( 2 ).ShouldBeTheSameAs( custom_data );
 			};
 
-			It should_return_the_collection_json_of_json_configuration = ( ) => result.ShouldBeTheSameAs( collection_json );
+			It should_return_the_collection_json_of_json_configuration = ( ) => result.ShouldBeTheSameAs( json_collection );
 		}
 
 		public class when_adding_new_link_to_the_collection : building_concern {
 			Establish c = ( ) => {
 				link = new Link( );
-				collection_json_configuration.Stub( x => x.AddLink( link ) ).Return( json_configuration );
+				json_collection_configuration.Stub( x => x.AddLink( link ) ).Return( configuration );
 			};
 
 			Because b = ( ) => result = sut.AddLink( link );
 
-			It should_add_the_link_using_json_configuration = ( ) => result.ShouldBeTheSameAs( json_configuration );
+			It should_add_the_link_using_json_configuration = ( ) => result.ShouldBeTheSameAs( configuration );
 
-			new static ICollectionJsonConfiguration result;
+			new static IJsonCollectionConfiguration result;
 			static Link link;
-			static ICollectionJsonConfiguration json_configuration;
+			static IJsonCollectionConfiguration configuration;
 		}
 
 		public class when_adding_new_item : building_concern {
 			Establish c = ( ) => {
 				item_data_source_configuration = null;
-				collection_json_configuration.Stub( x => x.AddItemsFor<object>( ) ).Return( item_data_source_configuration );
+				json_collection_configuration.Stub( x => x.AddItemsFor<object>( ) ).Return( item_data_source_configuration );
 			};
 
 			Because b = ( ) => result = sut.AddItemsFor<object>( );
@@ -104,7 +104,7 @@ namespace HypermediaTools.UnitTests.Services {
 			Establish c = ( ) => {
 				filter = new object( );
 				query_configuration = null;
-				collection_json_configuration.Stub( x => x.AddQueryFor( filter ) ).Return( query_configuration );
+				json_collection_configuration.Stub( x => x.AddQueryFor( filter ) ).Return( query_configuration );
 			};
 
 			Because b = ( ) => result = sut.AddQueryFor( filter );
@@ -121,7 +121,7 @@ namespace HypermediaTools.UnitTests.Services {
 
 			Because b = ( ) => sut.SetUrl( url );
 
-			It should_set_it_using_json_configuration = ( ) => collection_json_configuration.WasToldTo( x => x.SetUrl( url ) );
+			It should_set_it_using_json_configuration = ( ) => json_collection_configuration.WasToldTo( x => x.SetUrl( url ) );
 		}
 	}
 

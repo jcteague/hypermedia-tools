@@ -3,19 +3,19 @@
 namespace AvenidaSoftware.HypermediaTools.Services {
 	
 	public class QueryConfiguration : IQueryConfiguration{
-		public ICollectionJsonConfiguration JsonConfiguration { get; private set; }
+		public IJsonCollectionConfiguration Configuration { get; private set; }
 		public IDataBuilder DataBuilder { get; private set; }
 		public object Filter { get; private set; }
 
-		public QueryConfiguration(ICollectionJsonConfiguration json_configuration, IDataBuilder data_builder, object filter) {
-			JsonConfiguration = json_configuration;
+		public QueryConfiguration(IJsonCollectionConfiguration configuration, IDataBuilder data_builder, object filter) {
+			Configuration = configuration;
 			DataBuilder = data_builder;
 			this.Filter = filter;
 		}
 
-		public ICollectionJsonConfiguration WithSortingFields<SortingModel>() {
+		public IJsonCollectionConfiguration WithSortingFields<SortingModel>() {
 			var query = new Query();
-			var collection = JsonConfiguration.Collection;
+			var collection = Configuration.Collection;
 
 			var filter = query.filter;
 			filter.href = collection.href;
@@ -32,7 +32,7 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 			queries.Add(query);
 			collection.queries = queries;
 
-			return JsonConfiguration;
+			return Configuration;
 		}
 	}
 

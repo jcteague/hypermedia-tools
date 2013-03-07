@@ -2,12 +2,12 @@
 
 namespace AvenidaSoftware.HypermediaTools.Services {
 	
-	public class CollectionJsonConfiguration : ICollectionJsonConfiguration{
+	public class JsonCollectionConfiguration : IJsonCollectionConfiguration{
 		readonly IDataBuilder data_builder;
 
 		public Collection Collection { get; set; }
 
-		public CollectionJsonConfiguration(IDataBuilder data_builder) {
+		public JsonCollectionConfiguration(IDataBuilder data_builder) {
 			this.data_builder = data_builder;
 			Collection = new Collection();
 		}
@@ -16,11 +16,11 @@ namespace AvenidaSoftware.HypermediaTools.Services {
 			Collection.href = url;
 		}
 
-		public CollectionJson Build() {
-			return new CollectionJson{ collection = Collection };
+		public JsonCollection Build() {
+			return new JsonCollection{ collection = Collection };
 		}
 		
-		public ICollectionJsonConfiguration AddLink(Link link) {
+		public IJsonCollectionConfiguration AddLink(Link link) {
 			var links = new List<Link>(Collection.links);
 			
 			links.Add(link);

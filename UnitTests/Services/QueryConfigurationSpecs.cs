@@ -14,12 +14,12 @@ namespace HypermediaTools.UnitTests.Services {
 		public abstract class concern : Observes<IQueryConfiguration, QueryConfiguration>{
 
 			Establish c = () => {
-				json_configuration = depends.on<ICollectionJsonConfiguration>();
+				configuration = depends.on<IJsonCollectionConfiguration>();
 				data_builder = depends.on<IDataBuilder>();
 				filters =depends.on<object>();
 			};
 
-			protected static ICollectionJsonConfiguration json_configuration;
+			protected static IJsonCollectionConfiguration configuration;
 			protected static IDataBuilder data_builder;
 			protected static object filters;
 		}
@@ -28,7 +28,7 @@ namespace HypermediaTools.UnitTests.Services {
 			Establish c = () => {
 				href = "blah";
 				collection = new Collection { href = href };
-				json_configuration.Stub(x => x.Collection).Return(collection);
+				configuration.Stub(x => x.Collection).Return(collection);
 				filter_data = fake.an<IEnumerable<Data>>();
 				data_builder.Stub(x => x.GetDatasFor(filters.GetType(), filters)).Return(filter_data);
 
@@ -50,7 +50,7 @@ namespace HypermediaTools.UnitTests.Services {
 				filter.data.ShouldBeTheSameAs(sort_data);
 			};
 
-			static ICollectionJsonConfiguration result;
+			static IJsonCollectionConfiguration result;
 			static string href;
 			static IEnumerable<Data> filter_data;
 			static IEnumerable<Data> sort_data;

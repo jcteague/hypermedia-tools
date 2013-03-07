@@ -74,8 +74,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\CollectionJsonBuilderSpecs.cs" />
-    <Compile Include="Services\CollectionJsonConfigurationSpecs.cs" />
+    <Compile Include="Services\JsonCollectionBuilderSpecs.cs" />
+    <Compile Include="Services\JsonCollectionConfigurationSpecs.cs" />
     <Compile Include="Services\ItemConfigurationSpecs.cs" />
     <Compile Include="Services\DataBuilderSpecs.cs" />
     <Compile Include="Services\ItemDataSourceConfigurationSpecs.cs" />

@@ -19,7 +19,7 @@ namespace AvenidaSoftware.HypermediaTools.Builders {
 			return CreateResourceUrl<T>( action.Method.Name, entity_id );
 		}
 
-		public static string CreateResourceUrl< TController >( Func<CollectionJson> action ) {
+		public static string CreateResourceUrl< TController >( Func<JsonCollection> action ) {
 			return CreateUrl( typeof( TController ) ) + "/" + action.Method.Name;
 		}
 
