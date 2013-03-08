@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AvenidaSoftware.Objects</id>
+    <version>1.0.4814.29294</version>
+    <title>Avenida Software Objects</title>
+    <authors>Avenida Software</authors>
+    <owners>Avenida Software</owners>
+    <licenseUrl>http://license_url_here_or_delete_this_line/</licenseUrl>
+    <projectUrl>http://project_url_here_or_delete_this_line/</projectUrl>
+    <iconUrl>http://icon_url_here_or_delete_this_line/</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Objects</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <tags>Tag1 Tag2</tags>
+    <references>
+      <reference file="AvenidaSoftware.Objects.dll" />
+    </references>
+  </metadata>
+</package>

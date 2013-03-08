@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AA3B2630-1217-40B3-99BC-0404B22C7E33}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AvenidaSoftware.HypermediaTools</RootNamespace>
+    <AssemblyName>HypermediaTools</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseToNugetLocal|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\ReleaseToNugetLocal\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseToNugetOrg|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\ReleaseToNugetOrg\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AvenidaSoftware.Extensions, Version=1.0.4814.29233, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AvenidaSoftware.Extensions.1.0.4814.29233\lib\net40\AvenidaSoftware.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="AvenidaSoftware.Objects, Version=1.0.4814.29294, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AvenidaSoftware.Objects.1.0.4814.29294\lib\net40\AvenidaSoftware.Objects.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Builders\BuildTemplate.cs" />
+    <Compile Include="Builders\ManualTemplateBuilder.cs" />
+    <Compile Include="Builders\TemplateFieldBuilder.cs" />
+    <Compile Include="Builders\UrlBuilder.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Core\Collection.cs" />
+    <Compile Include="Core\JsonCollection.cs" />
+    <Compile Include="Core\CollectionMessage.cs" />
+    <Compile Include="Core\Data.cs" />
+    <Compile Include="Core\FilterTemplate.cs" />
+    <Compile Include="Core\Item.cs" />
+    <Compile Include="Core\ItemContainer.cs" />
+    <Compile Include="Core\Link.cs" />
+    <Compile Include="Core\LinkType.cs" />
+    <Compile Include="Core\TemplateFilterAttribute.cs" />
+    <Compile Include="Extensions\collection_extensions.cs" />
+    <Compile Include="Extensions\data_list_extensions.cs" />
+    <Compile Include="Extensions\internal_string_extensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Query.cs" />
+    <Compile Include="Core\SortingTemplate.cs" />
+    <Compile Include="Core\StatusCode.cs" />
+    <Compile Include="Core\Template.cs" />
+    <Compile Include="Core\TemplateModel.cs" />
+    <Compile Include="Services\DataTemplateBuilder.cs" />
+    <Compile Include="Services\Interfaces\IItemDataSourceConfiguration.cs" />
+    <Compile Include="Services\Interfaces\IQueryConfiguration.cs" />
+    <Compile Include="Services\Interfaces\ITemplateConfiguration.cs" />
+    <Compile Include="Services\Interfaces\ITemplateDataSourceConfiguration.cs" />
+    <Compile Include="Services\ItemDataSourceConfiguration.cs" />
+    <Compile Include="Services\ItemInformationProvider.cs" />
+    <Compile Include="Services\ObjectDataTemplateBuilderConfiguration.cs" />
+    <Compile Include="Builders\JsonCollectionBuilder.cs" />
+    <Compile Include="Services\JsonCollectionConfiguration.cs" />
+    <Compile Include="Services\CustomDataTemplateBuilderConfiguration.cs" />
+    <Compile Include="Services\DataBuilder.cs" />
+    <Compile Include="Services\DataTemplateBuilderConfiguration.cs" />
+    <Compile Include="Services\IgnoreDataTemplateBuilderConfiguration.cs" />
+    <Compile Include="Services\Interfaces\IJsonCollectionBuilder.cs" />
+    <Compile Include="Services\Interfaces\IDataBuilder.cs" />
+    <Compile Include="Services\Interfaces\IDataTemplateBuilderConfiguration.cs" />
+    <Compile Include="Services\Interfaces\IItemConfiguration.cs" />
+    <Compile Include="Services\Interfaces\IJsonCollectionConfiguration.cs" />
+    <Compile Include="Services\ItemConfiguration.cs" />
+    <Compile Include="Services\QueryConfiguration.cs" />
+    <Compile Include="Services\TemplateConfiguration.cs" />
+    <Compile Include="Services\TemplateDataSourceConfiguration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Builders\Interfaces\" />
+    <Folder Include="DSL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- RELEASE TO NUGET LOCAL||ORG -->
+  <Target Name="AfterBuild">
+	<Exec Command="if not exist $(ProjectDir)NugetPackage mkdir $(ProjectDir)NugetPackage" />
+    <CallTarget Condition="'$(Configuration)' == 'ReleaseToNugetLocal'" Targets="release_nuget_local" />
+    <CallTarget Condition="'$(Configuration)' == 'ReleaseToNugetOrg'" Targets="release_nuget_org" />
+  </Target>
+  <Target Name="release_nuget_local">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+    </GetAssemblyIdentity>
+    <Exec Command="..\Tools\Nuget.exe pack $(ProjectPath) -OutputDirectory $(ProjectDir)NugetPackage\ -Symbols -Properties Configuration=ReleaseToNugetLocal" />
+    <Exec Command="..\Tools\Nuget.exe push $(ProjectDir)NugetPackage\$(TargetName).%(AssemblyVersion.Version).nupkg -s http://nugetserver.avenida.com/" />
+  </Target>
+  <Target Name="release_nuget_org">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+    </GetAssemblyIdentity>
+    <Exec Command="..\Tools\Nuget.exe pack $(ProjectPath) -OutputDirectory $(ProjectDir)NugetPackage\ -Symbols -Properties Configuration=ReleaseToNugetOrg" />
+    <Exec Command="..\Tools\Nuget.exe push $(ProjectDir)NugetPackage\$(TargetName).%(AssemblyVersion.Version).nupkg" />
+  </Target>
+</Project>
