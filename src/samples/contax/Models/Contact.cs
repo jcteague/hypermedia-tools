@@ -5,7 +5,7 @@ using HypermediaTools.CollectionBuilders;
 
 namespace contax.Models
 {
-    public class Contact :IAmAResource
+    public class Contact : IAmAResource
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
