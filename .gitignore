@@ -2,10 +2,11 @@ syntax: glob
 release/
 log/
 
+*/NugetPackage/*
 temp_build/
-release
+release/*
 
-
+*.git
 *.suo
 *.TMP
 *.user
@@ -31,4 +32,3 @@ application.txt
 *.ncrunchproject
 *.ncrunchsolution
 *.swo
-
